@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package name="lyrics">
+	<title>Lyrics</title>
+	<summary>This packages allows to create lyrics website.</summary>
+	<author>Vasily Bezruchkin</author>
+	<contributor>Intelliants LLC</contributor>
+	<version>3.2.0</version>
+	<date>2014-07-25</date>
+	<compatibility>3.2.0</compatibility>
+	<status>active</status>
+	<url>lyrics</url>
+
+	<screenshots>
+		<screenshot type="preview" name="preview.jpg">Index page</screenshot>
+	</screenshots>
+
+	<packageitems>
+		<item url_fields="title_alias" table_name="lyrics_genres" payable="0">genres</item>
+		<item url_fields="title_alias" table_name="lyrics_artists" payable="0">artists</item>
+		<item url_fields="title_alias,artist_alias" table_name="lyrics_albums" payable="0">albums</item>
+		<item url_fields="title_alias,artist_alias,album_alias" table_name="lyrics_lyrics" payable="0">lyrics</item>
+	</packageitems>
+
+	<actions>
+		<action name="genre_view" url="lyrics/genres/" icon="list" order="1" status="admin" pages="add_genre,edit_genre">View Genres</action>
+		<action name="genre_add" url="lyrics/genres/add/" icon="plus-alt" order="2" status="admin" pages="genres">Add Genre</action>
+
+		<action name="artist_view" url="lyrics/artists/" icon="list" order="1" status="admin" pages="add_artist,edit_artist">View Artists</action>
+		<action name="artist_add" url="lyrics/artists/add/" icon="plus-alt" order="2" status="admin" pages="artists">Add Artist</action>
+
+		<action name="album_view" url="lyrics/albums/" icon="list" order="1" status="admin" pages="add_album,edit_album">View Albums</action>
+		<action name="album_add" url="lyrics/albums/add/" icon="plus-alt" order="2" status="admin" pages="albums">Add Album</action>
+
+		<action name="lyric_view" url="lyrics/lyrics/" icon="list" order="1" status="admin" pages="add_lyric,edit_lyric">View Lyrics</action>
+		<action name="lyric_add" url="lyrics/lyrics/add/" icon="plus-alt" order="2" status="admin" pages="lyrics">Add Lyric</action>
+	</actions>
+
+	<groups>
+		<group name="lyrics">Lyrics</group>
+	</groups>
+
+	<adminpages>
+		<!-- Index page -->
+		<page group="lyrics" name="lyrics_stats" url="lyrics/" filename="statistics" menus="menu">Statistics</page>
+		<page group="lyrics" menus="menu">Management</page>
+
+		<!-- Manage genres -->
+		<page group="lyrics" menus="menu" url="lyrics/genres/" name="genres" filename="genres">Genres</page>
+		<page group="lyrics" url="lyrics/genres/add/" name="add_genre" filename="genres" parent="genres" action="add">Add Genre</page>
+		<page group="lyrics" url="lyrics/genres/edit/" name="edit_genre" filename="genres" parent="genres" action="edit">Edit Genre</page>
+
+		<!-- Manage artists -->
+		<page group="lyrics" menus="menu" url="lyrics/artists/" name="artists" filename="artists">Artists</page>
+		<page group="lyrics" url="lyrics/artists/add/" name="add_artist" filename="artists" parent="artists" action="add">Add Artist</page>
+		<page group="lyrics" url="lyrics/artists/edit/" name="edit_artist" filename="artists" parent="artists" action="edit">Edit Artist</page>
+
+		<!-- Manage albums -->
+		<page group="lyrics" menus="menu" url="lyrics/albums/" name="albums" filename="albums">Albums</page>
+		<page group="lyrics" url="lyrics/albums/add/" name="add_album" filename="albums" parent="albums" action="add">Add Album</page>
+		<page group="lyrics" url="lyrics/albums/edit/" name="edit_album" filename="albums" parent="albums" action="edit">Edit Album</page>
+
+		<page group="lyrics" menus="menu" url="lyrics/lyrics/" name="lyrics" filename="lyrics">Lyrics</page>
+		<page group="lyrics" url="lyrics/lyrics/add/" name="add_lyric" filename="lyrics" parent="lyrics" action="add">Add Lyric</page>
+		<page group="lyrics" url="lyrics/lyrics/edit/" name="edit_lyric" filename="lyrics" parent="lyrics" action="edit">Edit Lyric</page>
+	</adminpages>
+
+	<configgroup name="lyrics">Lyrics Package</configgroup>
+
+	<config group="lyrics" name="lyrics_package" type="divider" value="General">General</config>
+	<config group="lyrics" name="lyrics_auto_approval" multiple_values="1,0" type="radio" description="Lyrics submission auto approval">1</config>
+	<config group="lyrics" name="lyrics_per_page" type="text" description="Lyrics per page">20</config>
+	<config group="lyrics" name="lyrics_blocks" type="divider" value="General">Blocks Settings</config>
+	<config group="lyrics" name="lyrics_per_block" type="text" description="Lyrics per block">5</config>
+	<config group="lyrics" name="top_artists_per_block" type="text" description="Top Artists per block">5</config>
+	<config group="lyrics" name="new_artists_per_block" type="text" description="New Artists per block">5</config>
+	<config group="lyrics" name="top_albums_per_block" type="text" description="Top Albums per block">5</config>
+	<config group="lyrics" name="new_albums_per_block" type="text" description="New Albums per block">5</config>
+
+	<fields_groups>
+		<group item="lyrics" name="lyric_general" collapsed="0" title="General"><![CDATA[]]></group>
+		<group item="artists" name="artist_general" collapsed="0" title="General"><![CDATA[]]></group>
+		<group item="albums" name="album_general" collapsed="0" title="General"><![CDATA[]]></group>
+		<group item="genres" name="genre_general" collapsed="0" title="General"><![CDATA[]]></group>
+	</fields_groups>
+
+	<fields>
+		<field name="title" item="lyrics" title="Title" type="text" page="lyrics_home,my_lyrics,lyric_add,lyric_edit,lyric_view,favorites,genre_view,artist_view,album_view" group="lyric_general" length="70" required="1" searchable="1">Title</field>
+		<field name="body" item="lyrics" title="Body" page="lyric_add,lyric_edit,lyric_view" type="textarea" editor="0" required="1" searchable="1" group="lyric_general" length="10000"><![CDATA[Lyric body]]></field>
+		<field name="meta_description" item="lyrics" title="Meta-description" type="textarea" group="lyric_general" editor="0" required="0" adminonly="1" editable="0">Meta-Description</field>
+		<field name="meta_keywords" item="lyrics" title="Meta-keywords" type="text" group="lyric_general" length="150" required="0" adminonly="1" editable="0">Meta-Keywords</field>
+
+		<field name="title" item="artists" title="Title" type="text" page="artists,artist_submit,artist_edit,artist_view,genre_view,favorites" group="artist_general" length="70" required="1" searchable="1">Title</field>
+		<field name="description" item="artists" title="Description" page="artist_submit,artist_edit,artist_view" type="textarea" editor="1" required="0" searchable="1" group="artist_general"><![CDATA[Artist description]]></field>
+		<field name="meta_description" item="artists" group="artist_general" title="Meta-description" type="textarea" editor="0" required="0" adminonly="1" editable="0">Meta-Description</field>
+		<field name="meta_keywords" item="artists" group="artist_general" title="Meta-keywords" type="text" length="70" required="0" adminonly="1" editable="0">Meta-Keywords</field>
+
+		<field name="title" item="albums" title="Title" type="text" page="albums,album_submit,album_edit,album_view,favorites" group="album_general" length="70" required="1" searchable="1">Title</field>
+		<field name="description" item="albums" title="Description" page="album_submit,album_edit,album_view" type="textarea" editor="1" required="0" searchable="1" group="album_general"><![CDATA[Album description]]></field>
+		<field name="meta_description" item="albums" group="album_general" title="Meta-description" type="textarea" editor="0" required="0" adminonly="1"  editable="0">Meta-Description</field>
+		<field name="meta_keywords" item="albums" group="album_general" title="Meta-keywords" type="text" length="70" required="0" adminonly="1" editable="0">Meta-Keywords</field>
+		<field name="year" item="albums" title="Year" type="text" page="albums,album_submit,album_edit,album_view,favorites" group="album_general" length="70" required="0" searchable="1">Year</field>
+
+		<field name="title" item="genres" title="Title" type="text" page="genres,genre_submit,genre_edit,genre_view,favorites" group="genre_general" length="70" required="1" searchable="1">Title</field>
+		<field name="description" item="genres" title="Description" page="genre_submit,genre_edit,genre_view" type="textarea" editor="1" required="0" searchable="1" group="genre_general"><![CDATA[Genre description]]></field>
+		<field name="meta_description" item="genres" group="genre_general" title="Meta-description" type="textarea" editor="0" required="0" adminonly="1" editable="0">Meta-Description</field>
+		<field name="meta_keywords" item="genres" group="genre_general" title="Meta-keywords" type="text" length="70" required="0" adminonly="1" editable="0">Meta-Keywords</field>
+	</fields>
+
+	<pages>
+		<page group="lyrics" readonly="1" url="|PACKAGE|" name="lyrics_home" menus="main,lyrics"><![CDATA[Lyrics]]></page>
+		<page group="lyrics" readonly="1" url="profile/lyrics/" name="my_lyrics" filename="index" menus="account" nofollow="1"><![CDATA[My Lyrics]]></page>
+		<page group="lyrics" status="inactive" readonly="1" url="|PACKAGE|request/" name="lyric_request" filename="lyricrequest" menus="lyrics"><![CDATA[Request Lyrics]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|add/" name="lyric_add" filename="lyricadd" parent="lyricview" action="add" menus="main,lyrics"><![CDATA[Add Lyrics]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|edit/" name="lyric_edit" filename="lyricadd" parent="lyricview" action="edit"><![CDATA[Edit Lyric]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|lyric/" name="lyric_view" filename="index"><![CDATA[View Lyric]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|artist/" name="artist_view" filename="artists"><![CDATA[View Artist]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|album/" name="album_view" filename="index"><![CDATA[View Album]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|genre/" name="genre_view" filename="genres"><![CDATA[View Genre]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|artists/" name="artists" filename="artists" menus="lyrics"><![CDATA[Browse By Artist]]></page>
+		<page group="lyrics" readonly="1" url="|PACKAGE|genres/" name="genres" filename="genres" menus="lyrics"><![CDATA[Browse By Genre]]></page>
+	</pages>
+
+	<permissions>
+		<object type="group" type_id="4" object_id="my_lyrics" access="0" action="read">pages</object>
+	</permissions>
+
+	<objects>
+		<object pre_object="pages" object="lyricview" action="add" access="1">Add Lyric</object>
+		<object pre_object="pages" object="lyricview" action="edit" access="1">Edit Lyric</object>
+	</objects>
+
+	<phrases>
+		<phrase category="common" key="lyric">Lyric</phrase>
+		<phrase category="common" key="lyrics">Lyrics</phrase>
+		<phrase category="common" key="genre">Genre</phrase>
+		<phrase category="common" key="genres">Genres</phrase>
+		<phrase category="common" key="artist">Artist</phrase>
+		<phrase category="common" key="artists">Artists</phrase>
+		<phrase category="common" key="album">Album</phrase>
+		<phrase category="common" key="albums">Albums</phrase>
+		<phrase category="common" key="year">Year</phrase>
+
+		<phrase category="admin" key="lyrics_package">"Lyrics" package</phrase>
+		<phrase category="admin" key="add_genre">Add Genre</phrase>
+		<phrase category="admin" key="edit_genre">Edit Genre</phrase>
+		<phrase category="admin" key="add_artist">Add Artist</phrase>
+		<phrase category="admin" key="edit_artist">Edit Artist</phrase>
+		<phrase category="admin" key="add_album">Add Album</phrase>
+		<phrase category="admin" key="edit_album">Edit Album</phrase>
+		<phrase category="admin" key="add_lyric">Add Lyric</phrase>
+		<phrase category="admin" key="edit_lyric">Edit Lyric</phrase>
+
+		<phrase category="admin" key="reset_artists">Reset Artists</phrase>
+		<phrase category="admin" key="reset_albums">Reset Albums</phrase>
+		<phrase category="admin" key="reset_genres">Reset Genres</phrase>
+		<phrase category="admin" key="reset_lyrics">Reset Lyrics</phrase>
+
+		<phrase category="admin" key="artist_added">New artist has just been added.</phrase>
+		<phrase category="admin" key="album_added">New artist album has just been added.</phrase>
+		<phrase category="admin" key="genre_added">New genre has just been added.</phrase>
+		<phrase category="admin" key="lyric_added">New lyric has just been added.</phrase>
+		<phrase category="admin" key="system_fields">System Fields</phrase>
+		<phrase category="admin" key="title_alias">Title SEO Alias</phrase>
+		<phrase category="admin" key="alias_url_will_be">SEO Alias URL will be</phrase>
+		<phrase category="admin" key="genres_not_added">Music genres have not been created.</phrase>
+		<phrase category="admin" key="genre_already_exists">Genre already exists. Please change the title alias.</phrase>
+		<phrase category="admin" key="date_added">Date Added</phrase>
+		<phrase category="admin" key="date_modified">Last Modified</phrase>
+		<phrase category="admin" key="input_artist">Input artist</phrase>
+		<phrase category="admin" key="input_account">Input account</phrase>
+
+		<phrase category="admin" key="are_you_sure_to_delete_selected_genre">Are you sure you wish to delete the selected genre?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_genres">Are you sure you wish to delete the selected genres?</phrase>
+		<phrase category="admin" key="genre_deleted">Selected genres have been deleted successfully.</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_album">Are you sure you wish to delete the selected album?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_albums">Are you sure you wish to delete the selected albums?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_artist">Are you sure you wish to delete the selected artist?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_artists">Are you sure you wish to delete the selected artists?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_lyric">Are you sure you wish to delete the selected lyric?</phrase>
+		<phrase category="admin" key="are_you_sure_to_delete_selected_lyrics">Are you sure you wish to delete the selected lyrics?</phrase>
+
+		<phrase category="frontend" key="lyrics_package">Lyrics</phrase>
+		<phrase category="frontend" key="favorite_artists">Artists</phrase>
+		<phrase category="frontend" key="favorite_lyrics">Lyrics</phrase>
+		<phrase category="frontend" key="favorite_albums">Albums</phrase>
+		<phrase category="frontend" key="edit_lyric">Edit Lyric</phrase>
+		<phrase category="frontend" key="new_lyrics">New Lyrics</phrase>
+		<phrase category="frontend" key="other_albums">Other Albums</phrase>
+		<phrase category="frontend" key="artist_empty">Please choose lyrics artist.</phrase>
+		<phrase category="frontend" key="album_empty">Please choose lyrics album.</phrase>
+		<phrase category="frontend" key="lyric_updated">Lyrics has been successfully updated.</phrase>
+		<phrase category="frontend" key="lyric_added">Lyrics has been successfully added.</phrase>
+		<phrase category="frontend" key="lyrics_not_added">Lyrics have not been added.</phrase>
+		<phrase category="frontend" key="genres_not_added">Music genres have not been added.</phrase>
+		<phrase category="frontend" key="my_lyrics_not_added">You have not submitted any lyrics.</phrase>
+		<phrase category="frontend" key="album_lyrics_not_added">Music lyrics have not been added for this album.</phrase>
+		<phrase category="frontend" key="genre_artists_not_added">No artists have been submitted for this genre.</phrase>
+		<phrase category="frontend" key="genre_lyrics_not_added">No lyrics have been submitted for this genre.</phrase>
+		<phrase category="frontend" key="more_artist_albums_not_added">No other albums have been submitted for this artist.</phrase>		
+		<phrase category="frontend" key="my_albums">My Albums</phrase>
+		<phrase category="frontend" key="album_year_released">Album release year</phrase>
+		<phrase category="frontend" key="no_artists_added"><![CDATA[Administrator has not added any artists.]]></phrase>
+		<phrase category="frontend" key="no_lyrics"><![CDATA[Administrator has not added any lyrics. <a href="{%URL%}">Click here</a> to be the first who adds it.]]></phrase>
+	</phrases>
+
+	<blocks>
+		<block name="new_lyrics" title="New Lyrics" position="bottom" type="smarty" pages="index" sticky="0" filename="lyrics:block.new_lyrics.tpl"><![CDATA[]]></block>
+		<block name="new_artists" title="New Artists" position="right" collapsible="1" type="smarty" filename="lyrics:block.new_artists.tpl"><![CDATA[]]></block>
+		<block name="top_artists" title="Top Artists" position="left" collapsible="1" type="smarty" filename="lyrics:block.top_artists.tpl"><![CDATA[]]></block>
+		<block name="new_albums" title="New Albums" position="right" collapsible="1" type="smarty" filename="lyrics:block.new_albums.tpl"><![CDATA[]]></block>
+		<block name="top_albums" title="Top Albums" position="left" collapsible="1" type="smarty" filename="lyrics:block.top_albums.tpl"><![CDATA[]]></block>
+		<block name="random_lyrics" title="Random Lyrics" position="right" type="smarty" collapsible="1" filename="lyrics:block.random_lyrics.tpl"><![CDATA[]]></block>
+		<block name="latest_lyrics" title="Latest Lyrics" position="left" type="smarty" collapsible="1" filename="lyrics:block.latest_lyrics.tpl"><![CDATA[]]></block>
+		<block name="popular_lyrics" title="Popular Lyrics" position="right" type="smarty" collapsible="1" filename="lyrics:block.popular_lyrics.tpl"><![CDATA[]]></block>
+		<block name="lyric_author" title="Lyric Author" position="right" type="smarty" sticky="0" pages="lyric_view" order="2" filename="lyrics:block.lyric_author.tpl"><![CDATA[]]></block>
+		<block name="browse_by_genres" title="Lyric Genres" position="left" type="smarty" status="active" collapsible="1" filename="lyrics:block.browse_by_genres.tpl"><![CDATA[]]></block>
+	</blocks>
+
+	<blocks_pages name="item_actions">lyric_view</blocks_pages>
+
+	<hooks>
+		<hook name="phpCoreGetUrlBeforeConstantDefine" filename="packages/lyrics/includes/get_url.php" page_type="front"><![CDATA[]]></hook>
+
+		<hook name="phpCoreBeforePageDisplay" filename="packages/lyrics/includes/blocks.inc.php" page_type="front"><![CDATA[]]></hook>
+
+		<hook name="populateCommonStatisticsBlock" type="php" page_type="front">
+			<![CDATA[
+$stmt = "`status` = ':status'";
+
+$statistics['lyrics_package'] = array(
+	array(
+		'title' => iaLanguage::get('artists'),
+		'value' => number_format((int) $iaDb->one(iaDb::STMT_COUNT_ROWS, iaDb::printf($stmt, array('status' => iaCore::STATUS_ACTIVE)), 'lyrics_artists'))
+	),
+	array(
+		'title' => iaLanguage::get('albums'),
+		'value' => number_format((int) $iaDb->one(iaDb::STMT_COUNT_ROWS, iaDb::printf($stmt, array('status' => iaCore::STATUS_ACTIVE)), 'lyrics_albums'))
+	),
+	array(
+		'title' => iaLanguage::get('lyrics'),
+		'value' => number_format((int) $iaDb->one(iaDb::STMT_COUNT_ROWS, iaDb::printf($stmt, array('status' => iaCore::STATUS_ACTIVE)), 'lyrics_lyrics'))
+	)
+);
+			]]>
+		</hook>
+
+		<hook name="phpAdminDatabaseBeforeAll" type="php" page_type="admin">
+			<![CDATA[
+$reset_options['artists'] = iaLanguage::get('reset_artists');
+$reset_options['albums'] = iaLanguage::get('reset_albums');
+$reset_options['genres'] = iaLanguage::get('reset_genres');
+$reset_options['lyrics'] = iaLanguage::get('reset_lyrics');
+			]]>
+		</hook>
+
+		<hook name="phpDbControlBeforeReset">
+			<![CDATA[
+if (in_array($option, array('artists', 'albums', 'genres', 'lyrics')))
+{
+	$iaCore->factory('dbcontrol', iaCore::ADMIN)->truncate('lyric_' . $option);
+}
+			]]>
+		</hook>
+	</hooks>
+
+	<install>
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}lyrics_lyrics` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`member_id` int(11) NOT NULL,
+	`genres` varchar(255) NOT NULL,
+	`id_artist` int(11) NOT NULL,
+	`id_album` int(11) NOT NULL,
+	`artist_alias` varchar(255) NOT NULL,
+	`album_alias` varchar(255) NOT NULL,
+	`title_alias` varchar(255) NOT NULL,
+	`status` enum('inactive','active') NOT NULL DEFAULT 'inactive',
+	`date_added` date NOT NULL default '0000-00-00',
+	`date_modified` date NOT NULL default '0000-00-00',
+	`featured` tinyint(1) NOT NULL,
+	`featured_start` datetime,
+	`featured_end` datetime,
+	`views_num` int(11) unsigned NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `status` (`status`),
+	KEY `date_added` (`date_added`),
+	KEY `id_artist` (`id_artist`,`status`)
+) {mysql_version} AUTO_INCREMENT=1;
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}lyrics_artists` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`member_id` int(11) NOT NULL,
+	`genres` varchar(255) NOT NULL,
+	`title_alias` varchar(255) NOT NULL,
+	`status` enum('inactive', 'active') NOT NULL DEFAULT 'inactive',
+	`date_added` date NOT NULL default '0000-00-00',
+	`date_modified` date NOT NULL default '0000-00-00',
+	`featured` tinyint(1) NOT NULL,
+	`featured_start` datetime,
+	`featured_end` datetime,
+	`views_num` int(11) unsigned NOT NULL DEFAULT '0',
+	`num_albums` int(11) unsigned NOT NULL DEFAULT '0',
+	`num_lyrics` int(11) unsigned NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `title_alias` (`title_alias`,`status`),
+	KEY `genres` (`genres`,`status`),
+	KEY `status` (`status`),
+	KEY `date_added` (`date_added`)
+) {mysql_version} AUTO_INCREMENT=1 ;
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}lyrics_albums` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`member_id` int(11) NOT NULL,
+	`id_artist` int(11) NOT NULL,
+	`artist_alias` varchar(255) NOT NULL,
+	`title_alias` varchar(255) NOT NULL,
+	`date_released` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`status` enum('inactive','active') NOT NULL DEFAULT 'inactive',
+	`date_added` date NOT NULL default '0000-00-00',
+	`date_modified` date NOT NULL default '0000-00-00',
+	`featured` tinyint(1) NOT NULL,
+	`featured_start` datetime,
+	`featured_end` datetime,
+	`views_num` int(11) unsigned NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `id_artist` (`id_artist`,`status`),
+	KEY `status` (`status`),
+	KEY `date_modified` (`date_modified`),
+	KEY `title_alias` (`title_alias`,`status`)
+) {mysql_version} AUTO_INCREMENT=1;
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}lyrics_genres` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT ,
+	`member_id` INT(11) NOT NULL ,
+	`title_alias` VARCHAR(255) NOT NULL ,
+	`status` enum('inactive', 'active') NOT NULL default 'inactive',
+	`date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+	`date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+	`views_num` int(11) unsigned NOT NULL default '0',
+	PRIMARY KEY ( `id` )
+) {mysql_version} AUTO_INCREMENT=1;
+			]]>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_lyrics`;</sql>
+		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_artists`;</sql>
+		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_albums`;</sql>
+		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_genres`;</sql>
+	</uninstall>
+</package>

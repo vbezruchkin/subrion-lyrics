@@ -1,0 +1,1 @@
+<li><a href="{ia_url data=$artist item='artists' type='url'}">{$artist.title}</a></li>
