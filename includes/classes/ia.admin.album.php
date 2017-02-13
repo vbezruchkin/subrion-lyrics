@@ -1,20 +1,22 @@
 <?php
-//##copyright##
 
-class iaAlbum extends abstractPackageAdmin implements iaLyricsPackage
+class iaAlbum extends abstractLyricsModuleAdmin
 {
-	static public $_table = 'lyrics_albums';
-	static protected $_item = 'albums';
+	protected static $_table = 'lyrics_albums';
+	protected $_itemName = 'albums';
+
+	protected $_activityLog = ['item' => 'album'];
 
 	protected $_moduleUrl = 'lyrics/albums/';
 
-	public $dashboardStatistics = array('icon' => 'albums');
+	public $dashboardStatistics = ['icon' => 'albums'];
 
-	private $patterns = array(
+	private $patterns = [
 		'view' => ':artist_alias:alias',
-	);
+	];
 
-	public function url($action, $data = array(), $generate = false)
+
+	public function url($action, $data = [], $generate = false)
 	{
 		$data['action'] = $action;
 		$data['alias'] = (isset($data['album_alias']) ? $data['album_alias'] : $data['title_alias']);
@@ -91,28 +93,28 @@ class iaAlbum extends abstractPackageAdmin implements iaLyricsPackage
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()');
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()'];
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];
 	}
 
-	public function update(array $aData, $aOldData = array())
+	public function update(array $aData, $aOldData = [])
 	{
-		$this->iaDb->update($aData, "`id` = {$aData['id']}", array('date_modified' => 'NOW()'), self::getTable());
+		$this->iaDb->update($aData, "`id` = {$aData['id']}", ['date_modified' => 'NOW()'], self::getTable());
 
 		return true;
 	}
 
 	public function delete($where)
 	{
-		$this->iaDb->delete($where, array(), false, self::getTable());
+		$this->iaDb->delete($where, [], false, self::getTable());
 
 		return true;
 	}
 
 	public function existsAlias($alias)
 	{
-		return $this->iaDb->exists("`title_alias` = :alias", array('alias' => $alias), self::getTable());
+		return $this->iaDb->exists("`title_alias` = :alias", ['alias' => $alias], self::getTable());
 	}
 }

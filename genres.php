@@ -3,7 +3,7 @@
 
 if (iaView::REQUEST_HTML == $iaView->getRequestType())
 {
-	$iaGenre = $iaCore->factoryPackage('genre', IA_CURRENT_PACKAGE);
+	$iaGenre = $iaCore->factoryModule('genre', IA_CURRENT_PACKAGE);
 
 	iaCore::fields();
 
@@ -17,7 +17,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			}
 
 			$iaItem = $iaCore->factory('item');
-			$iaGenre = $iaCore->factoryPackage('genre', IA_CURRENT_PACKAGE);
+			$iaGenre = $iaCore->factoryModule('genre', IA_CURRENT_PACKAGE);
 
 			// get genre by alias
 			$genre = isset($iaCore->requestPath[0]) ? $iaGenre->getGenreByAlias($iaCore->requestPath[0]) : false;
@@ -26,16 +26,16 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				iaView::errorPage(iaView::ERROR_NOT_FOUND);
 			}
 
-			$iaCore->startHook('phpViewGenreBeforeStart', array('listing' => $genre['id'], 'item' => $iaGenre->getItemName()));
+			$iaCore->startHook('phpViewGenreBeforeStart', ['listing' => $genre['id'], 'item' => $iaGenre->getItemName()]);
 
 			$genre['@view'] = true;
 
-			$iaCore->startHook('phpViewListingBeforeStart', array(
+			$iaCore->startHook('phpViewListingBeforeStart', [
 				'listing' => $genre['id'],
 				'item' => $iaGenre->getItemName(),
 				'title' => $genre['title'],
 				'desc' => $genre['description'],
-			));
+			]);
 
 			// get sections
 			$genre['item'] = $iaGenre->getItemName();
@@ -46,7 +46,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$iaGenre->incrementViewsCounter($genre['id']);
 
 			// get artists by genre
-			$iaArtist = $iaCore->factoryPackage('artist', IA_CURRENT_PACKAGE);
+			$iaArtist = $iaCore->factoryModule('artist', IA_CURRENT_PACKAGE);
 
 			$artists = $iaArtist->getArtistsByGenre($genre['id']);
 			if ($artists)
@@ -86,7 +86,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 			$start = (max($page, 1) - 1) * $num_index;
 
-			$search_alphas = array('0-9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+			$search_alphas = ['0-9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 			$alpha = (isset($iaCore->requestPath[0]) && in_array($iaCore->requestPath[0], $search_alphas)) ? $iaCore->requestPath[0] : false;
 			$cause = $alpha ? ('0-9' == $alpha ?  "(`$account_by` REGEXP '^[0-9]') AND " : "(`$account_by` LIKE '{$alpha}%') AND ") : '';
 

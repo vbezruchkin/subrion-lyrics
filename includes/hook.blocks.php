@@ -1,5 +1,4 @@
 <?php
-//##copyright##
 
 if (iaView::REQUEST_HTML == $iaView->getRequestType())
 {
@@ -7,9 +6,9 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 	$iaItem = $iaCore->factory('item');
 
 	// init main item classes
-	$iaLyric = $iaCore->factoryPackage('lyric', 'lyrics');
-	$iaArtist = $iaCore->factoryPackage('artist', 'lyrics');
-	$iaAlbum = $iaCore->factoryPackage('album', 'lyrics');
+	$iaLyric = $iaCore->factoryModule('lyric', 'lyrics');
+	$iaArtist = $iaCore->factoryModule('artist', 'lyrics');
+	$iaAlbum = $iaCore->factoryModule('album', 'lyrics');
 
 	$defaultLimit = $iaCore->get('lyrics_per_block', 5);
 

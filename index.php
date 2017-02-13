@@ -4,7 +4,7 @@
 if (iaView::REQUEST_HTML == $iaView->getRequestType())
 {
 	iaCore::fields();
-	$iaLyric = $iaCore->factoryPackage('lyric', IA_CURRENT_PACKAGE);
+	$iaLyric = $iaCore->factoryModule('lyric', IA_CURRENT_PACKAGE);
 
 	// get lyric fields
 	$fields = iaField::filterFields($account_lyrics, $iaLyric->getItemName());
@@ -28,13 +28,13 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$iaView->assign('total_lyrics', $total_lyrics);
 
 			// init iaAlbum class
-			$iaAlbum = $iaCore->factoryPackage('album', IA_CURRENT_PACKAGE);
+			$iaAlbum = $iaCore->factoryModule('album', IA_CURRENT_PACKAGE);
 
 			// get account albums
 			$albums = $iaAlbum->getAlbumsByAccount($_SESSION['user']['id']);
 			$iaView->assign('albums', $albums);
 
-			$iaCore->startHook('phpMyLyricsBeforeStart', array('item' => $iaLyric->getItemName()));
+			$iaCore->startHook('phpMyLyricsBeforeStart', ['item' => $iaLyric->getItemName()]);
 
 			$iaView->display('mylyrics');
 
@@ -48,7 +48,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			}
 
 			$iaItem = $iaCore->factory('item');
-			$iaAlbum = $iaCore->factoryPackage('album', IA_CURRENT_PACKAGE);
+			$iaAlbum = $iaCore->factoryModule('album', IA_CURRENT_PACKAGE);
 
 			$album = isset($album_alias) ? $iaAlbum->getAlbumByAlias($album_alias) : false;
 			if (empty($album))
@@ -56,14 +56,14 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				iaView::errorPage(iaView::ERROR_NOT_FOUND);
 			}
 
-			$iaCore->startHook('phpViewAlbumBeforeStart', array('listing' => $album['id'], 'item' => 'album'));
+			$iaCore->startHook('phpViewAlbumBeforeStart', ['listing' => $album['id'], 'item' => 'album']);
 
 			$album['@view'] = true;
 			$album['item'] = 'album';
 
 			$iaCore->album = $album;
 
-			$album_fav = $iaItem->updateItemsFavorites(array($album), $iaAlbum->getItemName());
+			$album_fav = $iaItem->updateItemsFavorites([$album], $iaAlbum->getItemName());
 			unset($album);
 
 			$album = $album_fav[0];
@@ -71,7 +71,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$iaView->assign('album', $album);
 
 			// get artist information
-			$iaArtist = $iaCore->factoryPackage('artist', IA_CURRENT_PACKAGE);
+			$iaArtist = $iaCore->factoryModule('artist', IA_CURRENT_PACKAGE);
 
 			$artist = $iaArtist->getArtist($album['id_artist']);
 			$iaView->assign('artist', $artist);
@@ -81,7 +81,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$iaView->assign('albums', $albums);
 
 			// get artist lyrics
-			$iaLyric = $iaCore->factoryPackage('lyric', IA_CURRENT_PACKAGE);
+			$iaLyric = $iaCore->factoryModule('lyric', IA_CURRENT_PACKAGE);
 			$lyrics = $iaLyric->getLyricsByAlbum($album['id']);
 			if ($lyrics)
 			{
@@ -99,10 +99,10 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 
 			// breadcrumb formation
 			iaBreadcrumb::add(_t('artists'), 'artists/');
-			iaBreadcrumb::add($artist['title'], $iaCore->iaSmarty->ia_url(array(
+			iaBreadcrumb::add($artist['title'], $iaCore->iaSmarty->ia_url([
 					'type' => 'url',
 					'item' => $iaArtist->getItemName(),
-					'data' => $artist)
+					'data' => $artist]
 			));
 
 			// set meta keywords and description
@@ -123,7 +123,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			}
 
 			$iaItem = $iaCore->factory('item');
-			$iaLyric = $iaCore->factoryPackage('lyric', IA_CURRENT_PACKAGE);
+			$iaLyric = $iaCore->factoryModule('lyric', IA_CURRENT_PACKAGE);
 
 			// get genre by alias
 			$lyric = isset($iaCore->requestPath[2]) ? $iaLyric->getLyric((int)$iaCore->requestPath[2]) : false;
@@ -132,13 +132,13 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				iaView::errorPage(iaView::ERROR_NOT_FOUND);
 			}
 
-			$iaCore->startHook('phpViewLyricBeforeStart', array('listing' => $lyric['id'], 'item' => $iaLyric->getItemName()));
+			$iaCore->startHook('phpViewLyricBeforeStart', ['listing' => $lyric['id'], 'item' => $iaLyric->getItemName()]);
 
 			$lyric['@view'] = true;
 			$lyric['item'] = $iaLyric->getItemName();
 			$iaCore->lyric = $lyric;
 
-			$lyric_fav = $iaItem->updateItemsFavorites(array($lyric), $iaLyric->getItemName());
+			$lyric_fav = $iaItem->updateItemsFavorites([$lyric], $iaLyric->getItemName());
 			unset($lyric);
 
 			$lyric = $lyric_fav[0];
@@ -151,16 +151,16 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 
 			if (IN_USER && $_SESSION['user']['id'] == $lyric['member_id'])
 			{
-				$actionUrls = array(
+				$actionUrls = [
 					iaCore::ACTION_EDIT => $iaLyric->url(iaCore::ACTION_EDIT, $lyric),
 //			iaCore::ACTION_DELETE => $iaLyric->url(iaCore::ACTION_DELETE, $lyric)
-				);
+				];
 				$iaView->assign('tools', $actionUrls);
 
-				$iaItem->setItemTools(array(
+				$iaItem->setItemTools([
 					'title' => _t('edit_lyric'),
 					'url' => $actionUrls[iaCore::ACTION_EDIT]
-				));
+				]);
 				/*
 						$iaCore->setItemTools(array(
 							'title' => _t('delete_listing'),
@@ -179,12 +179,12 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			}
 
 			// get artist information
-			$iaArtist = $iaCore->factoryPackage('artist', IA_CURRENT_PACKAGE);
+			$iaArtist = $iaCore->factoryModule('artist', IA_CURRENT_PACKAGE);
 			$artist = $iaArtist->getArtist($lyric['id_artist']);
 			$iaView->assign('artist', $artist);
 
 			// get album information
-			$iaAlbum = $iaCore->factoryPackage('album', IA_CURRENT_PACKAGE);
+			$iaAlbum = $iaCore->factoryModule('album', IA_CURRENT_PACKAGE);
 			$album = $iaAlbum->getAlbum($lyric['id_album']);
 			$iaView->assign('album', $album);
 
@@ -193,15 +193,15 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 
 			// breadcrumb formation
 			iaBreadcrumb::add(_t('artists'), 'artists/');
-			iaBreadcrumb::add($artist['title'], $iaCore->iaSmarty->ia_url(array(
+			iaBreadcrumb::add($artist['title'], $iaCore->iaSmarty->ia_url([
 					'type' => 'url',
 					'item' => $iaArtist->getItemName(),
-					'data' => $artist)
+					'data' => $artist]
 			));
-			iaBreadcrumb::add($album['title'], $iaCore->iaSmarty->ia_url(array(
+			iaBreadcrumb::add($album['title'], $iaCore->iaSmarty->ia_url([
 					'type' => 'url',
 					'item' => $iaAlbum->getItemName(),
-					'data' => $album)
+					'data' => $album]
 			));
 
 			// set meta keywords and description

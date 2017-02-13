@@ -1,20 +1,20 @@
 <?php
 //##copyright##
 
-class iaLyric extends abstractPackageAdmin implements iaLyricsPackage
+class iaLyric extends abstractLyricsModuleAdmin
 {
 	static public $_table = 'lyrics_lyrics';
 	static protected $_item = 'lyrics';
 
 	protected $_moduleUrl = 'lyrics/lyrics/';
 
-	public $dashboardStatistics = array('icon' => 'lyrics');
+	public $dashboardStatistics = ['icon' => 'lyrics'];
 
-	private $patterns = array(
+	private $patterns = [
 		'view' => ':artist_alias:album_alias:alias:id'
-	);
+	];
 
-	public function url($action, $data = array(), $generate = false)
+	public function url($action, $data = [], $generate = false)
 	{
 		$data['action'] = $action;
 		$data['alias'] = (isset($data['genre_alias']) ? $data['genre_alias'] : $data['title_alias']);
@@ -45,30 +45,30 @@ class iaLyric extends abstractPackageAdmin implements iaLyricsPackage
 
 	public function delete($where)
 	{
-		$this->iaDb->delete($where, array(), false, self::getTable());
+		$this->iaDb->delete($where, [], false, self::getTable());
 
 		return true;
 	}
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_added' => 'NOW()', 'date_modified' => 'NOW()');
+		$addit = ['date_added' => 'NOW()', 'date_modified' => 'NOW()'];
 
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];
 	}
 
-	function update(array $aData, $aOldData = array())
+	function update(array $aData, $aOldData = [])
 	{
-		$this->iaDb->update($aData, "`id` = {$aData['id']}", array('date_modified' => 'NOW()'), self::getTable());
+		$this->iaDb->update($aData, "`id` = {$aData['id']}", ['date_modified' => 'NOW()'], self::getTable());
 
 		return true;
 	}
 
 	public function existsAlias($alias)
 	{
-		return $this->iaDb->exists("`title_alias` = :alias", array('alias' => $alias), self::getTable());
+		return $this->iaDb->exists("`title_alias` = :alias", ['alias' => $alias], self::getTable());
 	}
 
 	public function getLyrics($aWhere, $aStart = 0, $aLimit = '', $aOrder = '')
@@ -89,7 +89,7 @@ class iaLyric extends abstractPackageAdmin implements iaLyricsPackage
 		return $this->iaDb->getAll($sql);
 	}
 
-	public function getById($aId)
+	public function getById($id, $process = true)
 	{
 		$sql = "SELECT t1.*, t2.`title` `artist`, t2.`genres` `artist_genres`, ";
 		$sql .= "IF(t3.`fullname` <> '', t3.`fullname`, t3.`username`) `account` ";
@@ -98,7 +98,7 @@ class iaLyric extends abstractPackageAdmin implements iaLyricsPackage
 		$sql .= "ON t1.`id_artist` = t2.`id` ";
 		$sql .= "LEFT JOIN `{$this->iaDb->prefix}members` t3 ";
 		$sql .= "ON t1.`member_id` = t3.`id` ";
-		$sql .= "WHERE t1.`id` = '{$aId}'";
+		$sql .= "WHERE t1.`id` = '{$id}'";
 		
 		return $this->iaDb->getRow($sql);
 	}

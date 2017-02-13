@@ -1,30 +1,30 @@
 <?php
 //##copyright##
 
-class iaArtist extends abstractPackageFront implements iaLyricsPackage
+class iaArtist extends abstractModuleFront implements iaLyricsPackage
 {
 	static protected $_table = 'lyrics_artists';
 	static protected $_item = 'artists';
 
-	protected $_statuses = array(iaCore::STATUS_ACTIVE, iaCore::STATUS_INACTIVE);
+	protected $_statuses = [iaCore::STATUS_ACTIVE, iaCore::STATUS_INACTIVE];
 
 	var $where = " ar.`status` = 'active'";
 	var $count = 0;
 
 	public function url ($action, array $listingData)
 	{
-		$patterns = array(
+		$patterns = [
 			'default' => 'artist/:alias.html',
 			'artist_info' => 'artist/:artist_alias.html'
-		);
+		];
 
 		$url = iaDb::printf(
 			isset($patterns[$action]) ? $patterns[$action] : $patterns['default'],
-			array(
+			[
 				'action' => $action,
 				'alias' => isset($listingData['title_alias']) ? $listingData['title_alias'] : '',
 				'artist_alias' => isset($listingData['artist_alias']) ? $listingData['artist_alias'] : ''
-			)
+			]
 		);
 
 		return $this->iaCore->packagesData['lyrics']['url'] . $url;
@@ -34,12 +34,12 @@ class iaArtist extends abstractPackageFront implements iaLyricsPackage
 	{
 		$edit_url = IA_URL . 'artist/edit/?id=' . $aParams['item']['id'];
 
-		return array($edit_url, '');
+		return [$edit_url, ''];
 	}
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()', 'member_id' => $_SESSION['user']['id']);
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()', 'member_id' => $_SESSION['user']['id']];
 
 		return $this->iaDb->insert($entryData, $addit, self::getTable());
 	}

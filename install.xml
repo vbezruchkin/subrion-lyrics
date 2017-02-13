@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package name="lyrics">
+<module type="package" name="lyrics">
 	<title>Lyrics</title>
 	<summary>This packages allows to create lyrics website.</summary>
 	<author>Vasily Bezruchkin</author>
@@ -14,25 +14,18 @@
 		<screenshot type="preview" name="preview.jpg">Index page</screenshot>
 	</screenshots>
 
-	<packageitems>
-		<item url_fields="title_alias" table_name="lyrics_genres" payable="0">genres</item>
-		<item url_fields="title_alias" table_name="lyrics_artists" payable="0">artists</item>
-		<item url_fields="title_alias,artist_alias" table_name="lyrics_albums" payable="0">albums</item>
-		<item url_fields="title_alias,artist_alias,album_alias" table_name="lyrics_lyrics" payable="0">lyrics</item>
-	</packageitems>
+	<items>
+		<item table_name="lyrics_genres" payable="0">genres</item>
+		<item table_name="lyrics_artists" payable="0">artists</item>
+		<item table_name="lyrics_albums" payable="0">albums</item>
+		<item table_name="lyrics_lyrics" payable="0">lyrics</item>
+	</items>
 
 	<actions>
-		<action name="genre_view" url="lyrics/genres/" icon="list" order="1" status="admin" pages="add_genre,edit_genre">View Genres</action>
-		<action name="genre_add" url="lyrics/genres/add/" icon="plus-alt" order="2" status="admin" pages="genres">Add Genre</action>
-
-		<action name="artist_view" url="lyrics/artists/" icon="list" order="1" status="admin" pages="add_artist,edit_artist">View Artists</action>
-		<action name="artist_add" url="lyrics/artists/add/" icon="plus-alt" order="2" status="admin" pages="artists">Add Artist</action>
-
-		<action name="album_view" url="lyrics/albums/" icon="list" order="1" status="admin" pages="add_album,edit_album">View Albums</action>
-		<action name="album_add" url="lyrics/albums/add/" icon="plus-alt" order="2" status="admin" pages="albums">Add Album</action>
-
-		<action name="lyric_view" url="lyrics/lyrics/" icon="list" order="1" status="admin" pages="add_lyric,edit_lyric">View Lyrics</action>
-		<action name="lyric_add" url="lyrics/lyrics/add/" icon="plus-alt" order="2" status="admin" pages="lyrics">Add Lyric</action>
+		<action name="add_genre" url="lyrics/genres/add/" icon="plus-alt" order="2" status="admin" pages="genres"><![CDATA[]]></action>
+		<action name="add_artist" url="lyrics/artists/add/" icon="plus-alt" order="2" status="admin" pages="artists">Add Artist</action>
+		<action name="add_album" url="lyrics/albums/add/" icon="plus-alt" order="2" status="admin" pages="albums"><![CDATA[]]></action>
+		<action name="add_lyric" url="lyrics/lyrics/add/" icon="plus-alt" order="2" status="admin" pages="lyrics"><![CDATA[]]></action>
 	</actions>
 
 	<groups>
@@ -40,28 +33,12 @@
 	</groups>
 
 	<adminpages>
-		<!-- Index page -->
-		<page group="lyrics" name="lyrics_stats" url="lyrics/" filename="statistics" menus="menu">Statistics</page>
+		<page group="lyrics" filename="statistics" name="lyrics_stats" url="lyrics/" menus="menu">Statistics</page>
 		<page group="lyrics" menus="menu">Management</page>
-
-		<!-- Manage genres -->
-		<page group="lyrics" menus="menu" url="lyrics/genres/" name="genres" filename="genres">Genres</page>
-		<page group="lyrics" url="lyrics/genres/add/" name="add_genre" filename="genres" parent="genres" action="add">Add Genre</page>
-		<page group="lyrics" url="lyrics/genres/edit/" name="edit_genre" filename="genres" parent="genres" action="edit">Edit Genre</page>
-
-		<!-- Manage artists -->
-		<page group="lyrics" menus="menu" url="lyrics/artists/" name="artists" filename="artists">Artists</page>
-		<page group="lyrics" url="lyrics/artists/add/" name="add_artist" filename="artists" parent="artists" action="add">Add Artist</page>
-		<page group="lyrics" url="lyrics/artists/edit/" name="edit_artist" filename="artists" parent="artists" action="edit">Edit Artist</page>
-
-		<!-- Manage albums -->
-		<page group="lyrics" menus="menu" url="lyrics/albums/" name="albums" filename="albums">Albums</page>
-		<page group="lyrics" url="lyrics/albums/add/" name="add_album" filename="albums" parent="albums" action="add">Add Album</page>
-		<page group="lyrics" url="lyrics/albums/edit/" name="edit_album" filename="albums" parent="albums" action="edit">Edit Album</page>
-
-		<page group="lyrics" menus="menu" url="lyrics/lyrics/" name="lyrics" filename="lyrics">Lyrics</page>
-		<page group="lyrics" url="lyrics/lyrics/add/" name="add_lyric" filename="lyrics" parent="lyrics" action="add">Add Lyric</page>
-		<page group="lyrics" url="lyrics/lyrics/edit/" name="edit_lyric" filename="lyrics" parent="lyrics" action="edit">Edit Lyric</page>
+		<page group="lyrics" filename="genres" name="genres" url="lyrics/genres/" menus="menu">Genres</page>
+		<page group="lyrics" filename="artists" name="artists" url="lyrics/artists/" menus="menu">Artists</page>
+		<page group="lyrics" filename="albums" name="albums" url="lyrics/albums/" menus="menu">Albums</page>
+		<page group="lyrics" filename="lyrics" name="lyrics" url="lyrics/lyrics/" menus="menu">Lyrics</page>
 	</adminpages>
 
 	<configgroup name="lyrics">Lyrics Package</configgroup>
@@ -119,15 +96,6 @@
 		<page group="lyrics" readonly="1" url="|PACKAGE|artists/" name="artists" filename="artists" menus="lyrics"><![CDATA[Browse By Artist]]></page>
 		<page group="lyrics" readonly="1" url="|PACKAGE|genres/" name="genres" filename="genres" menus="lyrics"><![CDATA[Browse By Genre]]></page>
 	</pages>
-
-	<permissions>
-		<object type="group" type_id="4" object_id="my_lyrics" access="0" action="read">pages</object>
-	</permissions>
-
-	<objects>
-		<object pre_object="pages" object="lyricview" action="add" access="1">Add Lyric</object>
-		<object pre_object="pages" object="lyricview" action="edit" access="1">Edit Lyric</object>
-	</objects>
 
 	<phrases>
 		<phrase category="common" key="lyric">Lyric</phrase>
@@ -219,9 +187,7 @@
 	<blocks_pages name="item_actions">lyric_view</blocks_pages>
 
 	<hooks>
-		<hook name="phpCoreGetUrlBeforeConstantDefine" filename="packages/lyrics/includes/get_url.php" page_type="front"><![CDATA[]]></hook>
-
-		<hook name="phpCoreBeforePageDisplay" filename="packages/lyrics/includes/blocks.inc.php" page_type="front"><![CDATA[]]></hook>
+		<hook name="phpCoreBeforePageDisplay" filename="hook.blocks" page_type="front"><![CDATA[]]></hook>
 
 		<hook name="populateCommonStatisticsBlock" type="php" page_type="front">
 			<![CDATA[
@@ -255,7 +221,7 @@ $reset_options['lyrics'] = iaLanguage::get('reset_lyrics');
 
 		<hook name="phpDbControlBeforeReset">
 			<![CDATA[
-if (in_array($option, array('artists', 'albums', 'genres', 'lyrics')))
+if (in_array($option, ['artists', 'albums', 'genres', 'lyrics']))
 {
 	$iaCore->factory('dbcontrol', iaCore::ADMIN)->truncate('lyric_' . $option);
 }
@@ -343,23 +309,26 @@ CREATE TABLE `{prefix}lyrics_albums` (
 		<sql>
 			<![CDATA[
 CREATE TABLE `{prefix}lyrics_genres` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT ,
-	`member_id` INT(11) NOT NULL ,
-	`title_alias` VARCHAR(255) NOT NULL ,
-	`status` enum('inactive', 'active') NOT NULL default 'inactive',
-	`date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-	`date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-	`views_num` int(11) unsigned NOT NULL default '0',
-	PRIMARY KEY ( `id` )
-) {mysql_version} AUTO_INCREMENT=1;
+	`id` int(8) unsigned NOT NULL auto_increment,
+	`member_id` INT(11) NOT NULL,
+	`title_alias` VARCHAR(255) NOT NULL,
+	`date_added` date,
+	`date_modified` date,
+	`status` enum('active', 'inactive') NOT NULL default 'inactive',
+	`order` mediumint(8) NOT NULL default 0,
+	`views_num` mediumint(8) unsigned NOT NULL default 0,
+	`featured` tinyint(1) unsigned NOT NULL default 0,
+	`featured_start` datetime NULL,
+	`featured_end` datetime NULL,
+	PRIMARY KEY (`id`),
+	KEY `STATUS` (`status`),
+	KEY `ORDER` (`order`)
+) {mysql_version};
 			]]>
 		</sql>
 	</install>
 
 	<uninstall>
-		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_lyrics`;</sql>
-		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_artists`;</sql>
-		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_albums`;</sql>
-		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_genres`;</sql>
+		<sql>DROP TABLE IF EXISTS `{prefix}lyrics_lyrics`, `{prefix}lyrics_artists`, `{prefix}lyrics_albums`, `{prefix}lyrics_genres`;</sql>
 	</uninstall>
-</package>
+</module>

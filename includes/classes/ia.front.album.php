@@ -1,7 +1,7 @@
 <?php
 //##copyright##
 
-class iaAlbum extends abstractPackageFront implements iaLyricsPackage
+class iaAlbum extends abstractModuleFront implements iaLyricsPackage
 {
 	static protected $_table = 'lyrics_albums';
 	static protected $_item = 'albums';
@@ -9,17 +9,17 @@ class iaAlbum extends abstractPackageFront implements iaLyricsPackage
 
 	public function url ($action, array $listingData)
 	{
-		$patterns = array(
+		$patterns = [
 			'default' => 'album/:artist_alias/:alias/',
 			'view' => 'album/:artist_alias/:alias/'
-		);
+		];
 
 		$url = iaDb::printf(
 			isset($patterns[$action]) ? $patterns[$action] : $patterns['default'],
-			array(
+			[
 				'alias' => isset($listingData['title_alias']) ? $listingData['title_alias'] : '',
 				'artist_alias' => isset($listingData['artist_alias']) ? $listingData['artist_alias'] : ''
-			)
+			]
 		);
 
 		return $this->iaCore->packagesData['lyrics']['url'] . $url;
@@ -27,7 +27,7 @@ class iaAlbum extends abstractPackageFront implements iaLyricsPackage
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()');
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()'];
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];

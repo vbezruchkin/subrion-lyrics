@@ -4,7 +4,7 @@
 if (iaView::REQUEST_HTML == $iaView->getRequestType())
 {
 	$iaItem = $iaCore->factory('item');
-	$iaArtist = $iaCore->factoryPackage('artist', IA_CURRENT_PACKAGE);
+	$iaArtist = $iaCore->factoryModule('artist', IA_CURRENT_PACKAGE);
 
 	// initialize fields class
 	iaCore::fields();
@@ -25,7 +25,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				iaView::errorPage(iaView::ERROR_NOT_FOUND);
 			}
 
-			$iaCore->startHook('phpViewArtistBeforeStart', array('listing' => $artist['id'], 'item' => $iaArtist->getItemName()));
+			$iaCore->startHook('phpViewArtistBeforeStart', ['listing' => $artist['id'], 'item' => $iaArtist->getItemName()]);
 			$artist['@view'] = true;
 			$artist['item'] = $iaArtist->getItemName();
 
@@ -37,7 +37,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$iaArtist->incrementViewsCounter($artist['id']);
 
 			// get artist albums
-			$iaAlbum = $iaCore->factoryPackage('album', IA_CURRENT_PACKAGE);
+			$iaAlbum = $iaCore->factoryModule('album', IA_CURRENT_PACKAGE);
 			$albums = $iaAlbum->getAlbumsByArtist($artist['id']);
 			// update favorites icon
 			if ($albums)
@@ -51,7 +51,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 			$lyric_start = (max($page, 1) - 1) * $lyric_limit;
 
-			$iaLyric = $iaCore->factoryPackage('lyric', IA_CURRENT_PACKAGE);
+			$iaLyric = $iaCore->factoryModule('lyric', IA_CURRENT_PACKAGE);
 			$lyrics = $iaLyric->getLyricsByArtist($artist['id'], $lyric_start, $lyric_limit);
 			$total_lyrics = $iaLyric->getNumLyrics("AND `id_artist` = '{$artist['id']}'");
 

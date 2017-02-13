@@ -40,4 +40,4 @@
 	var itemname = 'lyrics';
 {/ia_add_js}
 
-{ia_print_js files="_IA_URL_packages/lyrics/js/admin/footer"}
+{ia_print_js files="_IA_URL_modules/lyrics/js/admin/footer"}

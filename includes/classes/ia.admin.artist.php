@@ -1,20 +1,20 @@
 <?php
 //##copyright##
 
-class iaArtist extends abstractPackageAdmin implements iaLyricsPackage
+class iaArtist extends abstractLyricsModuleAdmin
 {
 	static public $_table = 'lyrics_artists';
 	static protected $_item = 'artists';
 
 	protected $_moduleUrl = 'lyrics/artists/';
 
-	public $dashboardStatistics = array('icon' => 'artists');
+	public $dashboardStatistics = ['icon' => 'artists'];
 
-	private $patterns = array(
+	private $patterns = [
 		'view' => ':alias',
-	);
+	];
 
-	public function url($action, $data = array(), $generate = false)
+	public function url($action, $data = [], $generate = false)
 	{
 		$data['action'] = $action;
 		$data['alias'] = (isset($data['artist_alias']) ? $data['artist_alias'] : $data['title_alias']);
@@ -86,22 +86,22 @@ class iaArtist extends abstractPackageAdmin implements iaLyricsPackage
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()');
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()'];
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];
 	}
 
-	public function update(array $aData, $aOldData = array())
+	public function update(array $aData, $aOldData = [])
 	{
-		$this->iaDb->update($aData, "`id` = {$aData['id']}", array('date_modified' => 'NOW()'), self::getTable());
+		$this->iaDb->update($aData, "`id` = {$aData['id']}", ['date_modified' => 'NOW()'], self::getTable());
 
 		return true;
 	}
 
 	public function delete($where)
 	{
-		$this->iaDb->delete($where, array(), false, self::getTable());
+		$this->iaDb->delete($where, [], false, self::getTable());
 
 		return true;
 	}
@@ -110,6 +110,6 @@ class iaArtist extends abstractPackageAdmin implements iaLyricsPackage
 	{
 		$iaDb = &$this->iaDb;
 
-		return $iaDb->exists("`title_alias` = :alias", array('alias' => $alias), self::getTable());
+		return $iaDb->exists("`title_alias` = :alias", ['alias' => $alias], self::getTable());
 	}
 }

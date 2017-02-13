@@ -1,9 +1,9 @@
 <?php
 //##copyright##
 
-$iaLyric = $iaCore->factoryPackage('lyric', IA_CURRENT_PACKAGE);
-$iaArtist = $iaCore->factoryPackage('artist', IA_CURRENT_PACKAGE);
-$iaAlbum = $iaCore->factoryPackage('album', IA_CURRENT_PACKAGE);
+$iaLyric = $iaCore->factoryModule('lyric', IA_CURRENT_PACKAGE);
+$iaArtist = $iaCore->factoryModule('artist', IA_CURRENT_PACKAGE);
+$iaAlbum = $iaCore->factoryModule('album', IA_CURRENT_PACKAGE);
 
 // process ajax actions
 if (iaView::REQUEST_JSON == $iaView->getRequestType())
@@ -36,10 +36,10 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 	iaCore::fields();
 	$iaUtil = $iaCore->factory('util');
 
-	$errorFields = array();
+	$errorFields = [];
 
 	$id = isset($iaCore->requestPath[0]) ? (int)$iaCore->requestPath[0] : false;
-	$lyric = $id ? $iaDb->row('*, \'lyrics\' as `item`', "`id`={$id}", 0, 1, iaLyric::getTable()) : array();
+	$lyric = $id ? $iaDb->row('*, \'lyrics\' as `item`', "`id`={$id}", 0, 1, iaLyric::getTable()) : [];
 
 	if (!empty($id) && empty($lyric))
 	{
@@ -81,7 +81,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 
 	if (!empty($_POST))
 	{
-		$data = array();
+		$data = [];
 
 		if ($fields)
 		{

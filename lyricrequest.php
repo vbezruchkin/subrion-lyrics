@@ -3,15 +3,15 @@
 define('INTELLI_REALM', $cfg['name']);
 
 $iaDb->setTable('lyrics');
-$iaLyric = $iaCore->factoryPackages(IA_CURRENT_PACKAGE, 'front', 'lyric');
+$iaLyric = $iaCore->factoryModules(IA_CURRENT_PACKAGE, 'front', 'lyric');
 
-$plans = array();
-$errorFields = array();
+$plans = [];
+$errorFields = [];
 
 if(isset($_GET['id'])) $id = (int)$_GET['id'];
 else $id = false;
 
-$lyric = $id ? $iaDb->row('*, \'lyrics\' as `item`', "`id`={$id}") : array();
+$lyric = $id ? $iaDb->row('*, \'lyrics\' as `item`', "`id`={$id}") : [];
 
 // plans
 $iaPlan = $iaCore->factory('front','plan');

@@ -1,5 +1,6 @@
 <form method="post" enctype="multipart/form-data" class="sap-form form-horizontal">
 	{preventCsrf}
+
 	{capture name='title' append='field_after'}
 		<div class="row" id="field-title-alias"{if 'edit' != $pageAction && empty($smarty.post.save)} style="display: none;"{/if}>
 			<label class="col col-lg-2 control-label" for="field_title_alias">{lang key='title_alias'}</label>
@@ -11,11 +12,11 @@
 		</div>
 	{/capture}
 
-	{include file='field-type-content-fieldset.tpl' item_sections=$fields_groups isSystem=true}
+	{include 'field-type-content-fieldset.tpl' isSystem=true}
 </form>
 
 {ia_add_js}
 	var itemname = 'genres';
 {/ia_add_js}
 
-{ia_print_js files='_IA_URL_packages/lyrics/js/admin/footer'}
+{ia_print_js files='_IA_URL_modules/lyrics/js/admin/footer'}

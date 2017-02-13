@@ -1,18 +1,21 @@
 <?php
 //##copyright##
 
-class iaGenre extends abstractPackageAdmin implements iaLyricsPackage
+class iaGenre extends abstractLyricsModuleAdmin
 {
-	static public $_table = 'lyrics_genres';
-	static protected $_item = 'genres';
+	protected static $_table = 'lyrics_genres';
+	protected $_itemName = 'genres';
+
+	protected $_activityLog = ['item' => 'genre'];
 
 	protected $_moduleUrl = 'lyrics/genres/';
 
-	public $dashboardStatistics = array('icon' => 'genres');
+	public $dashboardStatistics = ['icon' => 'genres'];
 
-	private $_patterns = array('view' => 'genre/:alias.html');
+	private $_patterns = ['view' => 'genre/:alias.html'];
 
-	public function url($action, $data = array())
+
+	public function url($action, $data = [])
 	{
 		$data['action'] = $action;
 		$data['alias'] = isset($data['genre_alias']) ? $data['genre_alias'] : $data['title_alias'];
@@ -29,25 +32,25 @@ class iaGenre extends abstractPackageAdmin implements iaLyricsPackage
 
 	public function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()');
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()'];
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];
 	}
 
-	public function update(array $aData)
+	public function update(array $itemData, $id)
 	{
-		return $this->iaDb->update($aData, "`id` = {$aData['id']}", array('date_modified' => 'NOW()'), self::getTable());
+		return $this->iaDb->update($itemData, "`id` = {$id}", ['date_modified' => 'NOW()'], self::getTable());
 	}
 
-	public function getById($aId)
+	public function getById($id, $process = true)
 	{
 		$iaDb = &$this->iaDb;
 
 		$sql = "SELECT t1.*, t2.`username` `account_username` FROM `".self::getTable(true)."` t1 ";
 		$sql .= "LEFT JOIN `{$iaDb->prefix}members` t2 ";
 		$sql .= "ON t1.`member_id` = t2.`id` ";
-		$sql .= "WHERE t1.`id` = {$aId}";
+		$sql .= "WHERE t1.`id` = {$id}";
 
 		return $iaDb->getRow($sql);
 	}
@@ -70,6 +73,6 @@ class iaGenre extends abstractPackageAdmin implements iaLyricsPackage
 
 	public function existsAlias($alias)
 	{
-		return $this->iaDb->exists("`title_alias` = :alias", array('alias' => $alias), self::getTable());
+		return $this->iaDb->exists("`title_alias` = :alias", ['alias' => $alias], self::getTable());
 	}
 }

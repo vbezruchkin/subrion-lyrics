@@ -1,7 +1,7 @@
 <?php
 //##copyright##
 
-class iaGenre extends abstractPackageFront implements iaLyricsPackage
+class iaGenre extends abstractModuleFront implements iaLyricsPackage
 {
 	static protected $_table = 'lyrics_genres';
 	static protected $_item = 'genres';
@@ -18,17 +18,17 @@ class iaGenre extends abstractPackageFront implements iaLyricsPackage
 
 	public function url($action, array $listingData)
 	{
-		$patterns = array(
+		$patterns = [
 			'default' => 'genre/:alias.html',
 			'view' => 'genre/:alias.html'
-		);
+		];
 
 		$url = iaDb::printf(
 			isset($patterns[$action]) ? $patterns[$action] : $patterns['default'],
-			array(
+			[
 				'action' => $action,
 				'alias' => isset($listingData['title_alias']) ? $listingData['title_alias'] : ''
-			)
+			]
 		);
 
 		return $this->iaCore->packagesData['lyrics']['url'] . $url;
@@ -36,7 +36,7 @@ class iaGenre extends abstractPackageFront implements iaLyricsPackage
 
 	function insert(array $entryData)
 	{
-		$addit = array('date_modified' => 'NOW()','date_added' => 'NOW()');
+		$addit = ['date_modified' => 'NOW()','date_added' => 'NOW()'];
 		$entryData['id'] = $this->iaDb->insert($entryData, $addit, self::getTable());
 
 		return $entryData['id'];
@@ -46,7 +46,7 @@ class iaGenre extends abstractPackageFront implements iaLyricsPackage
 	{
 		$edit_url = IA_URL.'genre/edit/?id='.$aParams['item']['id'];
 		
-		return array($edit_url, '');
+		return [$edit_url, ''];
 	}
 
 	function getGenre($aId)

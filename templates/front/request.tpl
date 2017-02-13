@@ -34,4 +34,4 @@
 	</p>
 </form>
 
-{ia_print_js files="jquery/plugins/jquery.form,jquery/plugins/jquery.block,jquery/plugins/jquery.textcounter,_IA_URL_packages/lyrics/js/front/submit"}
+{ia_print_js files="jquery/plugins/jquery.form,jquery/plugins/jquery.block,jquery/plugins/jquery.textcounter,_IA_URL_modules/lyrics/js/front/submit"}

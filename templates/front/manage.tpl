@@ -38,5 +38,5 @@
 	</div>
 </form>
 
-{ia_print_js files="jquery/plugins/jquery.form,jquery/plugins/jquery.block,jquery/plugins/jquery.textcounter,jquery/plugins/autocomplete/jquery.autocomplete,_IA_URL_packages/lyrics/js/front/submit"}
+{ia_print_js files="jquery/plugins/jquery.form,jquery/plugins/jquery.block,jquery/plugins/jquery.textcounter,jquery/plugins/autocomplete/jquery.autocomplete,_IA_URL_modules/lyrics/js/front/submit"}
 {ia_print_css files="_IA_URL_js/jquery/plugins/autocomplete/jquery.autocomplete"}
